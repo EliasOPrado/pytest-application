@@ -2,6 +2,7 @@ import json
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from rest_framework.test import APIClient
 from companies.models import Company
 
 
@@ -35,24 +36,27 @@ class CompanyTestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_update_company(self):
-    #     """
-    #       UPDATE method.
-    #     """
-    #     url = reverse('companies:companies-detail', kwargs={'pk': 1})
+    def test_update_company(self):
+        """
+          UPDATE method.
+        """
 
-    #     data = {verse('companies:companies-detail', kwargs={'pk': 1})
+        company_list = Company.objects.create(name='samplemed', 
+        status='Hiring', application_link='', last_update='2021-04-20T20:58:12Z',
+        notes='')
+        print("TEST HERE +++>", company_list)
+        url = reverse('companies:companies-detail', kwargs={'pk': company_list.pk})
 
-    #     data = {
-    #         'id': 1,
-    #         'name': 'IBM2',
-    #         'status': 'Hiring',
-    #         'application_link': 'https://dumb.domains/',
-    #         'last_update': '2021-04-20T20:58:12Z',
-    #         'notes': 'dumb note'
-    #     }
-    #     response = self.client.put(url, data)
-    #     print(response.content)
-    #     self.assertEqual(json.loads(response.content), data)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(Company.objects.get().name, 'IBM2')
+        data = {
+            'id':company_list.pk,
+            'name': 'Portoseguro',
+            'status': 'Hiring',
+            'application_link': 'https://dumb.domains/',
+            'last_update': '2021-04-20T20:58:12Z',
+            'notes': 'dumb note'
+        }
+
+        response = self.client.put(url, data)
+        print(response.content)
+        self.assertEqual(json.loads(response.content), data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
