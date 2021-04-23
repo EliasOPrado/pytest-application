@@ -9,3 +9,4 @@ class CompanyViewSet(ModelViewSet):
     queryset = Company.objects.all().order_by("-last_update")
     serializer_class = CompanySerializers
     pagination_class = PageNumberPagination
+
