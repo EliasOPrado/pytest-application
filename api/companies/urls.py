@@ -5,6 +5,7 @@ from .views import CompanyViewSet
 router = routers.DefaultRouter()
 router.register(r"companies", CompanyViewSet, basename="companies")
 
+app_name = 'companies'
 urlpatterns = [
-    path("", include(router.urls)),
+    path("api/", include(router.urls), name="companies"),
 ]
