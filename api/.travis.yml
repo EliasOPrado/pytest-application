@@ -1,6 +1,13 @@
 language: python
+
 python:
 - "3.8.1"
-install: "pip install -r requirements.txt"
+
+env:
+- SECRET_KEY="whatever"
+
+install: 
+- "pip install -r requirements.txt"
+
 script:
-- SECRET_KEY="whatever" ./manage.py test companies
+-  python manage.py test companies

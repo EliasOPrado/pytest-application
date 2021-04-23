@@ -18,7 +18,7 @@ class CompanyTestCase(APITestCase):
             'name': 'IBM',
             'status': 'Hiring',
             'application_link': 'https://dumb.domains/',
-            # 'last_update': '2021-04-20T20:58:12Z',
+            'last_update': '2021-04-20T20:58:12Z',
             'notes': 'dumb note'
         }
 
@@ -28,6 +28,7 @@ class CompanyTestCase(APITestCase):
 
     def test_get_company(self):
         """GET method."""
+        
         url = reverse('companies:companies-list')
 
         response = self.client.get(url, format='json')
@@ -36,7 +37,7 @@ class CompanyTestCase(APITestCase):
 
     # def test_update_company(self):
     #     """
-    #     UPDATE method.
+    #       UPDATE method.
     #     """
     #     url = reverse('companies:companies-detail', kwargs={'pk': 1})
 
@@ -50,7 +51,6 @@ class CompanyTestCase(APITestCase):
     #         'last_update': '2021-04-20T20:58:12Z',
     #         'notes': 'dumb note'
     #     }
-    
     #     response = self.client.put(url, data)
     #     print(response.content)
     #     self.assertEqual(json.loads(response.content), data)
