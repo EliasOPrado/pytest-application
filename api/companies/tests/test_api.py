@@ -1,32 +1,58 @@
-# import json
-# import pytest
-#
-# from companies.models import Company
-#
-# from unittest import TestCase
-# from django.test import Client
-# from django.urls import reverse
-#
-#
-# @pytest.mark.django_db
-# class TestGetCompanies(TestCase):
-#     def test_zero_companies_should_return_empty_list(self) -> None:
-#         client = Client()
-#         companies_url = reverse("companies-list")
-#         response = client.get(companies_url)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertEqual(json.loads(response.content), [])
-#
-#     def test_one_company_exists_should_succeed(self) -> None:
-#         client = Client()
-#         test_company = Company.objects.create(name="Amazon")
-#         companies_url = reverse("companies-list")
-#         response = client.get(companies_url)
-#         response_content = json.loads(response.content)[0]
-#         self.assertEqual(response.status_code, 200)
-#         self.assertEqual(response_content.get("name"), test_company.name)
-#         self.assertEqual(response_content.get("status"), "Hiring")
-#         self.assertEqual(response_content.get("application_link"), "")
-#         self.assertEqual(response_content.get("notes"), "")
-#
-#         test_company.delete()
+import json
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+from companies.models import Company
+
+
+
+class CompanyTestCase(APITestCase):
+    def test_create_company(self):
+        """
+        POST method
+        """
+
+        url = reverse('companies:companies-list')
+
+        data = {
+            'name': 'IBM',
+            'status': 'Hiring',
+            'application_link': 'https://dumb.domains/',
+            # 'last_update': '2021-04-20T20:58:12Z',
+            'notes': 'dumb note'
+        }
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(Company.objects.get().name, 'IBM')
+
+
+    def test_get_company(self):
+        """GET method."""
+        url = reverse('companies:companies-list')
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    # def test_update_company(self):
+    #     """
+    #     UPDATE method.
+    #     """
+    #     url = reverse('companies:companies-detail', kwargs={'pk': 1})
+
+    #     data = {verse('companies:companies-detail', kwargs={'pk': 1})
+
+    #     data = {
+    #         'id': 1,
+    #         'name': 'IBM2',
+    #         'status': 'Hiring',
+    #         'application_link': 'https://dumb.domains/',
+    #         'last_update': '2021-04-20T20:58:12Z',
+    #         'notes': 'dumb note'
+    #     }
+    
+    #     response = self.client.put(url, data)
+    #     print(response.content)
+    #     self.assertEqual(json.loads(response.content), data)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(Company.objects.get().name, 'IBM2')
