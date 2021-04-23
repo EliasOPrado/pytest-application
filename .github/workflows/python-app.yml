@@ -27,4 +27,4 @@ jobs:
 
     - name: Test 
       run: |
-        pytest-application/api/python manage.py test companies
+       pytest-application/api/python manage.py test companies
