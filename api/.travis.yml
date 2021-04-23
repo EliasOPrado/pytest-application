@@ -7,8 +7,8 @@ env:
 - SECRET_KEY="whatever"
 
 install: 
-- "pip install -r requirements.txt"
+- "pip3 install -r requirements.txt"
 
 script:
--  python manage.py test companies
+-  python3 manage.py test companies
 
